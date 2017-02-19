@@ -1,64 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .box{ width:700px; height:400px; background: url(img1/0.jpg) no-repeat; margin:50px auto; position:relative; }
-        .page, .page2{ width:50%; height:100%; position:absolute; top:0; right: 0;}
-        .page{ transform-style: preserve-3d; transform-origin: left center; transition:1s all ease; transform:perspective(800px) rotateY(0deg); z-index:1;}
-        .page div{ position:absolute; left:0; top: 0; width:100%; height:100%; }
-        .page .front{ background: url(img1/0.jpg) no-repeat right top; transform: translateZ(1px) ;}
-        .page .back{ background: url(img1/1.jpg) no-repeat ; transform: translateZ(-1px) scale(-1,1);}
-        .page2{ background: url(img1/1.jpg) no-repeat right top; }
-        /*.box:active .page{ transform: perspective(800px) rotateY(-180deg);}*/
-    </style>
+        *{ margin:0; padding:0; }
+        .box{ width:700px; height:400px; background:url(img1/0.jpg) no-repeat; margin:50px auto; position:relative; transform:rotateX(20deg); }
+        .page,.page2{ width:50%; height:100%; position:absolute; top:0; right:0; }
+        .page{ z-index:1; transform-style:preserve-3d; transform-origin:left center; transition:1s all ease; transform:perspective(800px) rotateY(0deg); }
+        .page div{ position:absolute; left:0; top:0; width:100%; height:100%; }
+        .page .front{ background:url(img1/0.jpg) no-repeat right top;transform:translateZ(1px); }
+        .page .back{ background:url(img1/1.jpg) no-repeat; transform:translateZ(-1px) scale(-1,1); }
 
+        .page2{ background:url(img1/1.jpg) no-repeat right top; }
+
+        /*.box:active .page{ transform:perspective(800px) rotateY(-180deg); }*/
+    </style>
     <script>
-        window.onload=function(){
+        window.onload=function (){
             var oBox=document.querySelector('.box');
-            var oPage=document.querySelector('.page');
+            var oPage=document.querySelector('.box .page');
             var oFront=document.querySelector('.front');
             var oBack=document.querySelector('.back');
-            var oPage2=document.querySelector('.page2');
-
+            var oPage2=document.querySelector('.box .page2');
             var iNow=0;
-            var bOK=false;
-            oBox.onclick= function () {
-                if(bOK)return;
-                bOK=!bOK;
+            var bOk=false;
+
+            oBox.onclick=function (){
+                if(bOk)return;
+                bOk=true;
                 iNow++;
                 oPage.style.transition='1s all ease';
                 oPage.style.transform='perspective(800px) rotateY(-180deg)';
 
                 oPage.addEventListener('transitionend',function (){
                     oPage.style.transition='none';
-                    oPage.style.transform='perspective(800px) rotateY(-180deg)';
+                    oPage.style.transform='perspective(800px) rotateY(0deg)';
 
                     //换图
                     oBox.style.backgroundImage='url(img1/'+iNow%3+'.jpg)';
                     oFront.style.backgroundImage='url(img1/'+iNow%3+'.jpg)';
                     oBack.style.backgroundImage='url(img1/'+(iNow+1)%3+'.jpg)';
                     oPage2.style.backgroundImage='url(img1/'+(iNow+1)%3+'.jpg)';
+                    bOk=false;
                 },false);
-                bOK=false;
-            }
-        }
+            };
+        };
     </script>
 </head>
-<body>
-    <div class="box">
-        <div class="page">
-            <div class="front"></div>
-            <div class="back"></div>
-        </div>
-        <div class="page2"></div>
-    </div>
 
+<body>
+<div class="box">
+    <div class="page">
+        <div class="front"></div>
+        <div class="back"></div>
+    </div>
+    <div class="page2"></div>
+</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
